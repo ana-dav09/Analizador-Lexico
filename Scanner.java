@@ -61,7 +61,126 @@ public class Scanner {
                         estado=26;
                         lexema+=c;
                     }
-
+                    else if(c=='>'){
+                        estado=1;
+                        lexema+=c;
+                    }
+                    else if(c=='<'){
+                        estado=4;
+                        lexema+=c;
+                    }
+                    else if(c=='='){
+                        estado=7;
+                        lexema+=c;
+                    }
+                    else if (c=='!') {
+                        estado=10;
+                        lexema+=c;
+                    }
+                    else if(c==','){
+                        estado=33;
+                        lexema+=c;
+                    }
+                    else if (c=='.') {
+                        estado=34;
+                        lexema+=c;
+                    }
+                    else if (c==';') {
+                        estado=35;
+                        lexema+=c;
+                    }
+                    else if (c=='+') {
+                        estado=36;
+                        lexema+=c;
+                    }
+                    else if (c=='-') {
+                        estado=37;
+                        lexema+=c;
+                    }
+                    else if (c=='*') {
+                        estado=38;
+                        lexema+=c;
+                    }
+                    else if (c=='(') {
+                        estado=39;
+                        lexema+=c;
+                    }
+                    else if (c==')') {
+                        estado=40;
+                        lexema+=c;
+                    }
+                    else if (c=='{') {
+                        estado=41;
+                        lexema+=c;
+                    }
+                    else if (c=='}') {
+                        estado=42;
+                        lexema+=c;
+                    }
+                    else if (c=='\n'){
+                        estado=43;
+                        lexema+="salto";
+                    }
+                    break;
+                case 1:
+                    if(c=='='){
+                        Token t = new Token(TipoToken.GREATER_EQUAL, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                    }
+                    else{
+                        Token t = new Token(TipoToken.GREATER, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                        i--;
+                    }
+                    break;
+                case 4:
+                    if(c=='='){
+                        Token t = new Token(TipoToken.LESS_EQUAL, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                    }
+                    else{
+                        Token t = new Token(TipoToken.LESS, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                        i--;
+                    }
+                    break;
+                case 7:
+                    if(c=='='){
+                        Token t = new Token(TipoToken.EQUAL_EQUAL, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                    }
+                    else{
+                        Token t = new Token(TipoToken.EQUAL, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                        i--;
+                    }
+                    break;
+                case 10:
+                    if(c=='='){
+                        Token t = new Token(TipoToken.BANG_EQUAL, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                    }
+                    else{
+                        Token t = new Token(TipoToken.BANG, lexema);
+                        tokens.add(t);
+                        estado=0;
+                        lexema="";
+                        i--;
+                    }
                     break;
 
             //IDENTIFICADORES Y PALABRAS RESERVADAS
@@ -241,8 +360,94 @@ public class Scanner {
                     i--;
 
                     break;
+                case 33:
+                    Token tc = new Token(TipoToken.COMMA, lexema);
+                    tokens.add(tc);
 
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 34:
+                    Token td = new Token(TipoToken.DOT, lexema);
+                    tokens.add(td);
 
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 35:
+                    Token ts = new Token(TipoToken.SEMICOLON, lexema);
+                    tokens.add(ts);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 36:
+                    Token tp = new Token(TipoToken.PLUS, lexema);
+                    tokens.add(tp);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 37:
+                    Token tm = new Token(TipoToken.MINUS, lexema);
+                    tokens.add(tm);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 38:
+                    Token te = new Token(TipoToken.STAR, lexema);
+                    tokens.add(te);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 39:
+                    Token tlp = new Token(TipoToken.LEFT_PAREN, lexema);
+                    tokens.add(tlp);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 40:
+                    Token trp = new Token(TipoToken.RIGHT_PAREN, lexema);
+                    tokens.add(trp);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 41:
+                    Token tlb = new Token(TipoToken.LEFT_BRACE, lexema);
+                    tokens.add(tlb);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 42:
+                    Token trb = new Token(TipoToken.RIGHT_BRACE, lexema);
+                    tokens.add(trb);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
+                case 43:
+                    Token tef = new Token(TipoToken.EOF, lexema);
+                    tokens.add(tef);
+
+                    estado = 0;
+                    lexema = "";
+                    i--;
+                    break;
             //TOKEN DE UN CARACTER
 
 
