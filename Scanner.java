@@ -53,9 +53,9 @@ public class Scanner {
                         estado = 15;
                         lexema += c;
                     }
-                    else if(c=='"'){
+                    else if(c==34){
                         estado=24;
-                        lexema+=c;
+                        //lexema+=c;
                     }
                     else if(c=='/'){
                         estado=26;
@@ -123,12 +123,14 @@ public class Scanner {
                     }
                     break;
                 case 1:
+                    //estado 2
                     if(c=='='){
                         Token t = new Token(TipoToken.GREATER_EQUAL, lexema);
                         tokens.add(t);
                         estado=0;
                         lexema="";
                     }
+                    //estado 3
                     else{
                         Token t = new Token(TipoToken.GREATER, lexema);
                         tokens.add(t);
@@ -138,12 +140,14 @@ public class Scanner {
                     }
                     break;
                 case 4:
+                    //estado 5
                     if(c=='='){
                         Token t = new Token(TipoToken.LESS_EQUAL, lexema);
                         tokens.add(t);
                         estado=0;
                         lexema="";
                     }
+                    //estado 6
                     else{
                         Token t = new Token(TipoToken.LESS, lexema);
                         tokens.add(t);
@@ -153,12 +157,14 @@ public class Scanner {
                     }
                     break;
                 case 7:
+                    //estado 8
                     if(c=='='){
                         Token t = new Token(TipoToken.EQUAL_EQUAL, lexema);
                         tokens.add(t);
                         estado=0;
                         lexema="";
                     }
+                    //estado 9
                     else{
                         Token t = new Token(TipoToken.EQUAL, lexema);
                         tokens.add(t);
@@ -168,12 +174,14 @@ public class Scanner {
                     }
                     break;
                 case 10:
+                    //estado 11
                     if(c=='='){
                         Token t = new Token(TipoToken.BANG_EQUAL, lexema);
                         tokens.add(t);
                         estado=0;
                         lexema="";
                     }
+                    //estado 12
                     else{
                         Token t = new Token(TipoToken.BANG, lexema);
                         tokens.add(t);
@@ -220,7 +228,7 @@ public class Scanner {
                             estado = 18;
                             lexema += c;
                     }
-                    else if(!Character.isLetter(c)){
+                    else{
                         Token t = new Token(TipoToken.NUMBER, lexema, Integer.valueOf(lexema));
                         tokens.add(t);
 
@@ -235,12 +243,8 @@ public class Scanner {
                         estado = 17;
                         lexema += c;
                     }else{
-                        Token t = new Token(TipoToken.NUMBER, lexema);
-                        tokens.add(t);
-
-                        estado = 0;
-                        lexema = "";
-                        i--;
+                        Interprete.error(lin, "error de secuencia en el numero: " + lexema);
+                        estado=-1;
                     }
                     break;
                 case 17:
@@ -270,16 +274,23 @@ public class Scanner {
                         lexema+=c;
                     }
                     else{
-                        Token t = new Token(TipoToken.NUMBER, lexema);
-                        tokens.add(t);
-
-                        estado = 0;
-                        lexema = "";
-                        i--;
+                        Interprete.error(lin, "error de secuencia en el numero: " + lexema);
+                        estado=-1;
                     }
                     break;
 
-                case 19, 20:
+                case 19:
+                    if (Character.isDigit(c)){
+                        estado=20;
+                        lexema+=c;
+                    }
+                    else{
+                        Interprete.error(lin, "error de secuencia en el numero: " + lexema);
+                        estado=-1;
+                    }
+                    break;
+                    
+                case 20:
                     if(Character.isDigit(c)){
                         estado = 20;
                         lexema += c;
@@ -305,7 +316,8 @@ public class Scanner {
                         lexema = "";
                         i--;
                     }else if(c=='\n'){ //Detectar salto de linea
-                        Interprete.error(lin, "error de salto");
+                        Interprete.error(lin, "error de salto en la cadena " + lexema);
+                        estado=-1;
                     }else{
                         lexema+=c;
                     }
@@ -447,11 +459,9 @@ public class Scanner {
                     estado = 0;
                     lexema = "";
                     i--;
+                    lin++;
                     break;
-            //TOKEN DE UN CARACTER
-
-
-
+            
 
             }
 
