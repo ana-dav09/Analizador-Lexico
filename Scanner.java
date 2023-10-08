@@ -121,6 +121,20 @@ public class Scanner {
                         estado=43;
                         lexema+="salto";
                     }
+                    else if(c==' '){
+                        estado=0;
+                    }
+                    else if(c == '\t'){
+                        estado=0;
+                    }
+                    else if(c == '\r'){
+                        estado=0;
+                    }
+                    else{
+                        lexema += c;
+                        Interprete.error(lin, "El caracter: "+lexema+" no pertenece");
+                        estado=-1;
+                    }
                     break;
                 case 1:
                     //estado 2
@@ -256,7 +270,7 @@ public class Scanner {
                             lexema += c;
                     }
                     else{
-                        Token t = new Token(TipoToken.NUMBER, lexema);
+                        Token t = new Token(TipoToken.NUMBER, lexema, Float.valueOf(lexema));
                         tokens.add(t);
 
                         estado = 0;
@@ -296,7 +310,7 @@ public class Scanner {
                         lexema += c;
                     }
                     else{
-                        Token t = new Token(TipoToken.NUMBER, lexema);
+                        Token t = new Token(TipoToken.NUMBER, lexema, Float.valueOf(lexema));
                         tokens.add(t);
 
                         estado = 0;
@@ -309,7 +323,7 @@ public class Scanner {
                 //CADENAS
                 case 24:
                     if(c=='"'){
-                        Token t = new Token(TipoToken.STRING, lexema);
+                        Token t = new Token(TipoToken.STRING, lexema, lexema);
                         tokens.add(t);
 
                         estado = 0;
