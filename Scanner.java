@@ -328,7 +328,7 @@ public class Scanner {
 
                         estado = 0;
                         lexema = "";
-                        i--;
+                        //i--;
                     }else if(c=='\n'){ //Detectar salto de linea
                         Interprete.error(lin, "error de salto en la cadena " + lexema);
                         estado=-1;
@@ -368,6 +368,9 @@ public class Scanner {
 
                 case 29, 31:
                     System.out.println("<comentario>");
+                    estado=0;
+                    lexema="";
+                    i--;
                     break;
 
                 case 30:
